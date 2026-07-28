@@ -1,0 +1,98 @@
+IMPORTANT
+DO NOT BUILD AN AI APPLICATION.
+DO NOT IMPLEMENT:-
+AI Agents
+AI Insights
+Chatbots
+AI Predictions
+Machine Learning
+LLM integrations
+THIS IS NOT AN AI PRODUCT.
+The purpose of this application is to provide:
+PROJECT MANAGEMENT
+CLIENT MANAGEMENT
+LABORATORY MANAGEMENT
+CRUD OPERATIONS
+ADVANCED ANALYTICS
+BUSINESS INSIGHTS
+DASHBOARDING
+REPORTING
+ALL INSIGHTS MUST BE GENERATED USING SQL AGGREGATIONS AND DATABASE ANALYTICS ONLY.
+Examples:-
+COUNT()
+SUM()
+AVG()
+GROUP BY
+FILTERS
+DATE ANALYTICS
+REVENUE ANALYTICS
+PROJECT ANALYTICS
+CLIENT ANALYTICS
+SERVICE ANALYTICS
+TAT ANALYTICS
+NO AI SHOULD BE USED ANYWHERE IN THE APPLICATION.
+The entire application should revolve around PROJECTS.
+Everything must originate from PROJECTS.
+PROJECT
+↓
+CLIENT
+↓
+SERVICES
+↓
+INSTITUTES
+↓
+SAMPLES
+↓
+PAYMENTS
+↓
+INVOICES
+↓
+QC STATUS
+↓
+ANALYSIS STATUS
+↓
+REPORT STATUS
+↓
+TAT
+↓
+REVENUE
+↓
+ANALYTICS
+Every department should only be able to CREATE, READ, UPDATE and DELETE the information relevant to them based on their permissions.
+The most important feature of this application is its ANALYTICS ENGINE.
+The dashboard should answer questions such as:
+How many projects are running today?
+How many projects were completed this month?
+Which service generated the highest revenue?
+Which institute submitted the most projects?
+Which client generates the highest revenue?
+Which territory is growing the fastest?
+Which projects are delayed?
+What is the average project completion TAT?
+Which month generated the highest revenue?
+What is the yearly growth of projects?
+How many samples were processed?
+Which services are growing the fastest?
+Which clients are inactive?
+What is the pending payment amount?
+Which departments have the highest workloads?
+Which projects are waiting for QC?
+Which projects are waiting for analysis?
+Which projects are waiting for report delivery?
+ALL DASHBOARDS SHOULD SUPPORT:
+Drill Down Analytics
+Export to Excel
+Export to PDF
+Advanced Filters
+Global Search
+Date Filters
+Service Filters
+Client Filters
+Project Filters
+Territory Filters
+Scientist Filters
+Institute Filters
+THE APPLICATION SHOULD FEEL LIKE A SCIENTIFIC BUSINESS INTELLIGENCE PLATFORM FOR GENOMICS AND BIOINFORMATICS COMPANIES RATHER THAN A SIMPLE MIS SYSTEM.
+THE PRIMARY OBJECTIVE IS:
+PROJECT TRACKING + CRUD OPERATIONS + ADVANCED ANALYTICS + BUSINESS GROWTH INSIGHTS.
+SIMPLE, FAST, SCALABLE AND BEAUTIFUL.

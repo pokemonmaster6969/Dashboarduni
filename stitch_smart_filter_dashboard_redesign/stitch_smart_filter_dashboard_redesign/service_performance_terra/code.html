@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Service Performance - BioTech Ops</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&amp;family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#dcc48e",
+                        "primary-fixed": "#c8e8d0",
+                        "primary": "#4a7c59",
+                        "primary-fixed-dim": "#8ecf9e",
+                        "outline-variant": "#c4c8bc",
+                        "on-tertiary-fixed": "#221a05",
+                        "inverse-primary": "#8ecf9e",
+                        "on-secondary-fixed": "#1e1a13",
+                        "surface-container-high": "#eae6de",
+                        "background": "#faf6f0",
+                        "tertiary": "#705c30",
+                        "outline": "#74796e",
+                        "inverse-surface": "#2e3230",
+                        "on-surface": "#2e3230",
+                        "error": "#b83230",
+                        "on-error-container": "#690005",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad8",
+                        "surface-container": "#f0ece4",
+                        "on-surface-variant": "#4a4e4a",
+                        "on-primary-fixed": "#002110",
+                        "primary-container": "#78a886",
+                        "inverse-on-surface": "#f5f0e8",
+                        "on-tertiary-fixed-variant": "#554020",
+                        "secondary": "#6b6358",
+                        "on-primary-fixed-variant": "#2a6038",
+                        "tertiary-container": "#c4a66a",
+                        "surface-container-highest": "#e4e0d8",
+                        "secondary-fixed": "#f0e8db",
+                        "surface-container-low": "#f5f1ea",
+                        "on-tertiary-container": "#554020",
+                        "surface": "#faf6f0",
+                        "secondary-fixed-dim": "#d4ccbf",
+                        "surface-tint": "#4a7c59",
+                        "secondary-container": "#f0e8db",
+                        "surface-variant": "#e4e0d8",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#faf6f0",
+                        "on-secondary-container": "#5e5548",
+                        "on-background": "#2e3230",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#d8f0de",
+                        "tertiary-fixed": "#f8e0a8",
+                        "surface-dim": "#dbd7cf",
+                        "on-secondary-fixed-variant": "#4a4538"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {},
+                    "fontFamily": {
+                        "headline": ["Literata", "serif"],
+                        "display": ["Literata", "serif"],
+                        "body": ["Nunito Sans", "sans-serif"],
+                        "label": ["Nunito Sans", "sans-serif"]
+                    },
+                    "fontSize": {}
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Nunito Sans', sans-serif; line-height: 1.6; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Literata', serif; }
+        .soft-shadow { box-shadow: 0 4px 20px rgba(46, 50, 48, 0.06); }
+    </style>
+</head>
+<body class="bg-background text-on-background h-full overflow-hidden flex">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-full py-6 bg-surface-container dark:bg-on-background text-primary dark:text-inverse-primary docked left-0 w-64 border-r border-outline-variant/30 flat no shadows shrink-0">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold shadow-sm">
+<span class="material-symbols-outlined text-lg">science</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md tracking-tight text-on-surface font-bold">LabCentral</div>
+<div class="text-xs text-on-surface-variant">V2.4 Operational</div>
+</div>
+</div>
+<div class="px-4 mb-6">
+<button class="w-full bg-primary hover:bg-primary-fixed-dim text-on-primary hover:text-on-primary-fixed-variant transition-colors duration-200 py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-semibold">
+<span class="material-symbols-outlined">add</span>
+                New Experiment
+            </button>
+</div>
+<ul class="flex flex-col gap-1 px-3 flex-grow font-body-sm text-body-sm">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-surface-container-highest dark:bg-surface-container-highest text-primary font-semibold border-r-4 border-primary" href="#">
+<span class="material-symbols-outlined">analytics</span>
+                    Analytics
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">biotech</span>
+                    Projects
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+<ul class="flex flex-col gap-1 px-3 mt-auto font-body-sm text-body-sm">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+                    Support
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">manage_accounts</span>
+                    Account
+                </a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<div class="flex flex-col flex-1 h-full overflow-hidden">
+<!-- TopNavBar (Mobile only for shell structure parity in prompt, though instructions say responsive pivot) -->
+<header class="md:hidden flex justify-between items-center w-full px-4 h-16 bg-surface dark:bg-on-background border-b border-outline-variant/30 shrink-0">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">BioTech Ops</div>
+<div class="flex gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-secondary-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A small, circular avatar portrait of a diverse female scientist with short dark hair, wearing a white lab coat over a soft cream blouse. Warm, natural lighting, organic laboratory setting in the background out of focus. Earthy tones, professional but approachable mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdPaOTqUqGg1WD2_kZaZlC8In0pafIWMsELEzfJ8nMqTkuBAeIhKShTdt00Tb00sMs0jnz16fhGdgzZS-RqEc9pjSRBPIhIz6sSVDVXqJtLfYB-Suo0S39isFHfMPcL1Asor_9DOI_0VmKfakQCiPpK1CZWL4KpPtfg86VyzEjHMg3sJ8O03MS6fsmFH3IIhL4AMBgEgmMyOtXuJQFopA_4KNS8KcUrlvJVackBitnDOq58p2tVmxr"/>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-y-auto p-4 md:p-8">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-3xl md:text-4xl font-headline text-on-surface mb-2">Service Performance</h1>
+<p class="text-on-surface-variant font-body">Sequencing platform analytics and operational metrics for Q3.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 rounded-xl bg-surface-container hover:bg-surface-variant text-on-surface font-label flex items-center gap-2 transition-colors border border-outline-variant/20">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                            Filter
+                        </button>
+<button class="px-4 py-2 rounded-xl bg-surface-container hover:bg-surface-variant text-on-surface font-label flex items-center gap-2 transition-colors border border-outline-variant/20">
+<span class="material-symbols-outlined text-sm">download</span>
+                            Export
+                        </button>
+</div>
+</div>
+<!-- KPI Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Total Volume -->
+<div class="bg-surface-container-lowest rounded-xl p-6 soft-shadow border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">biotech</span>
+</div>
+<span class="text-xs font-bold text-primary bg-primary-container/30 px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]">trending_up</span> 12%
+                            </span>
+</div>
+<h3 class="text-on-surface-variant font-label text-sm uppercase tracking-wider">Total Runs (YTD)</h3>
+<p class="text-3xl font-headline text-on-surface mt-1">4,289</p>
+</div>
+<!-- Revenue -->
+<div class="bg-surface-container-lowest rounded-xl p-6 soft-shadow border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<span class="text-xs font-bold text-primary bg-primary-container/30 px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]">trending_up</span> 8.4%
+                            </span>
+</div>
+<h3 class="text-on-surface-variant font-label text-sm uppercase tracking-wider">Service Revenue</h3>
+<p class="text-3xl font-headline text-on-surface mt-1">$2.4M</p>
+</div>
+<!-- Uptime -->
+<div class="bg-surface-container-lowest rounded-xl p-6 soft-shadow border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-full bg-secondary-container/50 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span class="text-xs font-bold text-on-surface-variant bg-surface-variant px-2 py-1 rounded-full">
+                                Target: 99%
+                            </span>
+</div>
+<h3 class="text-on-surface-variant font-label text-sm uppercase tracking-wider">Platform Uptime</h3>
+<p class="text-3xl font-headline text-on-surface mt-1">99.8%</p>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Volume by Platform -->
+<div class="bg-surface-container-lowest rounded-xl p-6 soft-shadow border border-outline-variant/10">
+<h3 class="text-xl font-headline text-on-surface mb-6 border-b border-outline-variant/20 pb-4">Volume by Platform</h3>
+<div class="space-y-6">
+<!-- Platform 1 -->
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-semibold text-on-surface">Illumina NovaSeq 6000</span>
+<span class="text-on-surface-variant">2,104 runs</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<!-- Platform 2 -->
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-semibold text-on-surface">Oxford Nanopore PromethION</span>
+<span class="text-on-surface-variant">1,430 runs</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-2">
+<div class="bg-tertiary h-2 rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<!-- Platform 3 -->
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-semibold text-on-surface">PacBio Revio</span>
+<span class="text-on-surface-variant">755 runs</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-2">
+<div class="bg-secondary h-2 rounded-full" style="width: 25%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Revenue Distribution (Mock Chart area) -->
+<div class="bg-surface-container-lowest rounded-xl p-6 soft-shadow border border-outline-variant/10 flex flex-col">
+<h3 class="text-xl font-headline text-on-surface mb-6 border-b border-outline-variant/20 pb-4">Revenue Distribution</h3>
+<div class="flex-1 flex items-center justify-center relative min-h-[200px]">
+<!-- Placeholder for a beautiful organic chart -->
+<div class="absolute inset-0 bg-gradient-to-tr from-surface-container to-surface-bright rounded-lg opacity-50"></div>
+<div class="relative w-48 h-48 rounded-full border-[16px] border-primary flex items-center justify-center">
+<div class="absolute w-full h-full rounded-full border-[16px] border-tertiary" style="clip-path: polygon(50% 50%, 100% 0, 100% 100%, 50% 100%);"></div>
+<div class="absolute w-full h-full rounded-full border-[16px] border-secondary" style="clip-path: polygon(50% 50%, 0 100%, 0 0, 50% 0); transform: rotate(-45deg);"></div>
+<div class="text-center bg-surface-container-lowest w-32 h-32 rounded-full flex flex-col items-center justify-center z-10 soft-shadow">
+<span class="text-xs text-on-surface-variant">Total</span>
+<span class="text-xl font-bold text-primary">$2.4M</span>
+</div>
+</div>
+</div>
+<div class="flex justify-center gap-6 mt-4 pt-4 border-t border-outline-variant/10 text-sm font-label">
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-primary"></span> Illumina</div>
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-tertiary"></span> Nanopore</div>
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-secondary"></span> PacBio</div>
+</div>
+</div>
+</div>
+<!-- Detailed Performance Table -->
+<div class="bg-surface-container-lowest rounded-xl soft-shadow border border-outline-variant/10 overflow-hidden">
+<div class="p-6 border-b border-outline-variant/20 flex justify-between items-center bg-surface/50">
+<h3 class="text-xl font-headline text-on-surface">Service Details</h3>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="pl-9 pr-4 py-2 rounded-xl bg-surface-container border-none text-sm focus:ring-2 focus:ring-primary w-64 text-on-surface placeholder-on-surface-variant/70" placeholder="Search services..." type="text"/>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container/30 text-on-surface-variant text-sm font-label uppercase tracking-wider">
+<th class="p-4 font-semibold">Service Offering</th>
+<th class="p-4 font-semibold">Platform</th>
+<th class="p-4 font-semibold text-right">Runs</th>
+<th class="p-4 font-semibold text-right">Yield (Avg)</th>
+<th class="p-4 font-semibold text-center">Status</th>
+</tr>
+</thead>
+<tbody class="text-on-surface divide-y divide-outline-variant/10 text-sm">
+<tr class="hover:bg-surface-variant/20 transition-colors">
+<td class="p-4 font-medium">Whole Genome Seq (Human)</td>
+<td class="p-4">NovaSeq 6000</td>
+<td class="p-4 text-right">842</td>
+<td class="p-4 text-right">120 Gb</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Optimal
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/20 transition-colors">
+<td class="p-4 font-medium">RNA-Seq (Bulk)</td>
+<td class="p-4">NovaSeq 6000</td>
+<td class="p-4 text-right">650</td>
+<td class="p-4 text-right">40M reads</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Optimal
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/20 transition-colors">
+<td class="p-4 font-medium">Long-Read Assembly</td>
+<td class="p-4">PromethION</td>
+<td class="p-4 text-right">412</td>
+<td class="p-4 text-right">85 Gb</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-tertiary/10 text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Capacity
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/20 transition-colors">
+<td class="p-4 font-medium">Single-Cell Multiome</td>
+<td class="p-4">NovaSeq 6000</td>
+<td class="p-4 text-right">320</td>
+<td class="p-4 text-right">250M reads</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Optimal
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/20 transition-colors">
+<td class="p-4 font-medium">Targeted Metagenomics</td>
+<td class="p-4">Revio</td>
+<td class="p-4 text-right">280</td>
+<td class="p-4 text-right">15 Gb</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-outline-variant/30 text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></span> Maintenance
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-outline-variant/10 bg-surface/50 flex justify-between items-center text-sm text-on-surface-variant">
+<span>Showing 1 to 5 of 24 services</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded-md hover:bg-surface-variant transition-colors disabled:opacity-50">Prev</button>
+<button class="px-3 py-1 rounded-md bg-primary text-on-primary hover:bg-primary-fixed-dim transition-colors">1</button>
+<button class="px-3 py-1 rounded-md hover:bg-surface-variant transition-colors">2</button>
+<button class="px-3 py-1 rounded-md hover:bg-surface-variant transition-colors">3</button>
+<button class="px-3 py-1 rounded-md hover:bg-surface-variant transition-colors">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

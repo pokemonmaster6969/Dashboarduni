@@ -1,22 +1,31 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: UniPath MIS - Genomics & Bioinformatics Project Management API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
-    description: Health operations
+  - name: projects
+  - name: clients
+  - name: services
+  - name: scientists
+  - name: territories
+  - name: sales-persons
+  - name: qc
+  - name: data-delivery
+  - name: invoices
+  - name: payments
+  - name: analytics
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +33,1128 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # CLIENTS
+  # ──────────────────────────────────────────────────────────────────────────
+  /clients:
+    get:
+      operationId: listClients
+      tags: [clients]
+      summary: List all clients
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: territory
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of clients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Client"
+    post:
+      operationId: createClient
+      tags: [clients]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Client"
+
+  /clients/{id}:
+    get:
+      operationId: getClient
+      tags: [clients]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Client"
+        "404":
+          description: Not found
+    put:
+      operationId: updateClient
+      tags: [clients]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Client"
+    delete:
+      operationId: deleteClient
+      tags: [clients]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # SERVICES
+  # ──────────────────────────────────────────────────────────────────────────
+  /services:
+    get:
+      operationId: listServices
+      tags: [services]
+      summary: List all services
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: serviceHead
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of services
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Service"
+    post:
+      operationId: createService
+      tags: [services]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+
+  /services/{id}:
+    get:
+      operationId: getService
+      tags: [services]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+    put:
+      operationId: updateService
+      tags: [services]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+    delete:
+      operationId: deleteService
+      tags: [services]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # SCIENTISTS
+  # ──────────────────────────────────────────────────────────────────────────
+  /scientists:
+    get:
+      operationId: listScientists
+      tags: [scientists]
+      summary: List all scientists
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Scientist"
+    post:
+      operationId: createScientist
+      tags: [scientists]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScientistInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Scientist"
+
+  /scientists/{id}:
+    put:
+      operationId: updateScientist
+      tags: [scientists]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScientistInput"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Scientist"
+    delete:
+      operationId: deleteScientist
+      tags: [scientists]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # TERRITORIES
+  # ──────────────────────────────────────────────────────────────────────────
+  /territories:
+    get:
+      operationId: listTerritories
+      tags: [territories]
+      summary: List all territories
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Territory"
+    post:
+      operationId: createTerritory
+      tags: [territories]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TerritoryInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Territory"
+
+  /territories/{id}:
+    put:
+      operationId: updateTerritory
+      tags: [territories]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TerritoryInput"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Territory"
+    delete:
+      operationId: deleteTerritory
+      tags: [territories]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # SALES PERSONS
+  # ──────────────────────────────────────────────────────────────────────────
+  /sales-persons:
+    get:
+      operationId: listSalesPersons
+      tags: [sales-persons]
+      summary: List all sales persons
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SalesPerson"
+    post:
+      operationId: createSalesPerson
+      tags: [sales-persons]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SalesPersonInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SalesPerson"
+
+  /sales-persons/{id}:
+    put:
+      operationId: updateSalesPerson
+      tags: [sales-persons]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SalesPersonInput"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SalesPerson"
+    delete:
+      operationId: deleteSalesPerson
+      tags: [sales-persons]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # PROJECTS
+  # ──────────────────────────────────────────────────────────────────────────
+  /projects:
+    get:
+      operationId: listProjects
+      tags: [projects]
+      summary: List projects with filters and pagination
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: clientId
+          in: query
+          schema:
+            type: integer
+        - name: serviceId
+          in: query
+          schema:
+            type: integer
+        - name: scientistId
+          in: query
+          schema:
+            type: integer
+        - name: territoryId
+          in: query
+          schema:
+            type: integer
+        - name: salesPersonId
+          in: query
+          schema:
+            type: integer
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: month
+          in: query
+          schema:
+            type: string
+        - name: withAnalysis
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 50
+      responses:
+        "200":
+          description: Paginated projects
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectListResponse"
+    post:
+      operationId: createProject
+      tags: [projects]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+
+  /projects/{id}:
+    get:
+      operationId: getProject
+      tags: [projects]
+      summary: Get full project details with QC, delivery, invoices, payments
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Project detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectDetail"
+        "404":
+          description: Not found
+    put:
+      operationId: updateProject
+      tags: [projects]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+    delete:
+      operationId: deleteProject
+      tags: [projects]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # QC RECORDS
+  # ──────────────────────────────────────────────────────────────────────────
+  /projects/{projectId}/qc:
+    get:
+      operationId: getQcRecord
+      tags: [qc]
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: QC record
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QcRecord"
+    put:
+      operationId: upsertQcRecord
+      tags: [qc]
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QcRecordInput"
+      responses:
+        "200":
+          description: Created or updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QcRecord"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # DATA DELIVERY
+  # ──────────────────────────────────────────────────────────────────────────
+  /projects/{projectId}/delivery:
+    get:
+      operationId: getDataDelivery
+      tags: [data-delivery]
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Data delivery record
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataDelivery"
+    put:
+      operationId: upsertDataDelivery
+      tags: [data-delivery]
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DataDeliveryInput"
+      responses:
+        "200":
+          description: Created or updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataDelivery"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # INVOICES
+  # ──────────────────────────────────────────────────────────────────────────
+  /invoices:
+    get:
+      operationId: listInvoices
+      tags: [invoices]
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: projectId
+          in: query
+          schema:
+            type: integer
+        - name: clientId
+          in: query
+          schema:
+            type: integer
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: paymentStatus
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 50
+      responses:
+        "200":
+          description: Paginated invoices
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InvoiceListResponse"
+    post:
+      operationId: createInvoice
+      tags: [invoices]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvoiceInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+
+  /invoices/{id}:
+    get:
+      operationId: getInvoice
+      tags: [invoices]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+    put:
+      operationId: updateInvoice
+      tags: [invoices]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvoiceUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+    delete:
+      operationId: deleteInvoice
+      tags: [invoices]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # PAYMENTS
+  # ──────────────────────────────────────────────────────────────────────────
+  /payments:
+    get:
+      operationId: listPayments
+      tags: [payments]
+      parameters:
+        - name: projectId
+          in: query
+          schema:
+            type: integer
+        - name: invoiceId
+          in: query
+          schema:
+            type: integer
+        - name: clientId
+          in: query
+          schema:
+            type: integer
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 50
+      responses:
+        "200":
+          description: Paginated payments
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentListResponse"
+    post:
+      operationId: createPayment
+      tags: [payments]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+
+  /payments/{id}:
+    put:
+      operationId: updatePayment
+      tags: [payments]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+    delete:
+      operationId: deletePayment
+      tags: [payments]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # ANALYTICS
+  # ──────────────────────────────────────────────────────────────────────────
+  /analytics/dashboard:
+    get:
+      operationId: getDashboardKpis
+      tags: [analytics]
+      summary: Dashboard KPI summary
+      parameters:
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: Dashboard KPIs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardKpis"
+
+  /analytics/revenue:
+    get:
+      operationId: getRevenueAnalytics
+      tags: [analytics]
+      summary: Revenue over time
+      parameters:
+        - name: groupBy
+          in: query
+          description: Grouping period
+          schema:
+            type: string
+            enum: [month, quarter, year]
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: serviceId
+          in: query
+          schema:
+            type: integer
+        - name: territoryId
+          in: query
+          schema:
+            type: integer
+        - name: clientId
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Revenue analytics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RevenueAnalytics"
+
+  /analytics/projects:
+    get:
+      operationId: getProjectAnalytics
+      tags: [analytics]
+      summary: Project volume and status analytics
+      parameters:
+        - name: groupBy
+          in: query
+          schema:
+            type: string
+            enum: [month, quarter, year, service, territory, scientist]
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: serviceId
+          in: query
+          schema:
+            type: integer
+        - name: territoryId
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Project analytics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectAnalytics"
+
+  /analytics/services:
+    get:
+      operationId: getServiceAnalytics
+      tags: [analytics]
+      summary: Revenue and volume by service
+      parameters:
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: Service analytics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ServiceStat"
+
+  /analytics/clients:
+    get:
+      operationId: getClientAnalytics
+      tags: [analytics]
+      summary: Revenue and volume by client
+      parameters:
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: Client analytics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClientStat"
+
+  /analytics/territories:
+    get:
+      operationId: getTerritoryAnalytics
+      tags: [analytics]
+      summary: Revenue and volume by territory
+      parameters:
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: Territory analytics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TerritoryStat"
+
+  /analytics/tat:
+    get:
+      operationId: getTatAnalytics
+      tags: [analytics]
+      summary: Turnaround time analytics
+      parameters:
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: serviceId
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: TAT analytics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TatAnalytics"
+
+  /analytics/payments:
+    get:
+      operationId: getPaymentAnalytics
+      tags: [analytics]
+      summary: Payment collection and outstanding balances
+      parameters:
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: clientId
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Payment analytics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentAnalytics"
+
+  /analytics/pipeline:
+    get:
+      operationId: getPipelineStatus
+      tags: [analytics]
+      summary: Projects grouped by pipeline stage
+      parameters:
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: Pipeline status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PipelineStatus"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +1165,1109 @@ components:
       required:
         - status
 
+    # ──────────────────────────────────────────────────────────────────────
+    # ENTITY SCHEMAS
+    # ──────────────────────────────────────────────────────────────────────
+
+    Client:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        billingName:
+          type: string
+        email:
+          type: string
+        contactNo:
+          type: string
+        city:
+          type: string
+        territoryId:
+          type: integer
+        territoryName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    ClientInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+        billingName:
+          type: string
+        email:
+          type: string
+        contactNo:
+          type: string
+        city:
+          type: string
+        territoryId:
+          type: integer
+
+    ClientUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        billingName:
+          type: string
+        email:
+          type: string
+        contactNo:
+          type: string
+        city:
+          type: string
+        territoryId:
+          type: integer
+
+    Service:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        serviceHead:
+          type: string
+        category:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    ServiceInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+        serviceHead:
+          type: string
+        category:
+          type: string
+
+    ServiceUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        serviceHead:
+          type: string
+        category:
+          type: string
+
+    Scientist:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        designation:
+          type: string
+        email:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    ScientistInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+        designation:
+          type: string
+        email:
+          type: string
+
+    Territory:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    TerritoryInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+
+    SalesPerson:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        territoryId:
+          type: integer
+        territoryName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    SalesPersonInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+        territoryId:
+          type: integer
+
+    Project:
+      type: object
+      required:
+        - id
+        - projectCode
+        - date
+        - status
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: integer
+        projectCode:
+          type: string
+        date:
+          type: string
+          format: date
+        month:
+          type: string
+        labSubmissionDate:
+          type: string
+          format: date
+        scientistId:
+          type: integer
+        scientistName:
+          type: string
+        clientId:
+          type: integer
+        clientName:
+          type: string
+        billingClientId:
+          type: integer
+        billingClientName:
+          type: string
+        serviceId:
+          type: integer
+        serviceName:
+          type: string
+        serviceHead:
+          type: string
+        sampleType:
+          type: string
+        withAnalysis:
+          type: string
+        noOfSamples:
+          type: integer
+        dataRequirement:
+          type: string
+        gbPerSample:
+          type: number
+        totalGb:
+          type: number
+        ratePerSample:
+          type: number
+        totalAmount:
+          type: number
+        gst:
+          type: number
+        totalProjectCost:
+          type: number
+        quotationNo:
+          type: string
+        salesPersonId:
+          type: integer
+        salesPersonName:
+          type: string
+        territoryId:
+          type: integer
+        territoryName:
+          type: string
+        city:
+          type: string
+        status:
+          type: string
+        remark:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    ProjectInput:
+      type: object
+      required:
+        - projectCode
+        - date
+      properties:
+        projectCode:
+          type: string
+          minLength: 1
+        date:
+          type: string
+          format: date
+        month:
+          type: string
+        labSubmissionDate:
+          type: string
+          format: date
+        scientistId:
+          type: integer
+        clientId:
+          type: integer
+        billingClientId:
+          type: integer
+        serviceId:
+          type: integer
+        sampleType:
+          type: string
+        withAnalysis:
+          type: string
+        noOfSamples:
+          type: integer
+        dataRequirement:
+          type: string
+        gbPerSample:
+          type: number
+        totalGb:
+          type: number
+        ratePerSample:
+          type: number
+        totalAmount:
+          type: number
+        gst:
+          type: number
+        totalProjectCost:
+          type: number
+        quotationNo:
+          type: string
+        salesPersonId:
+          type: integer
+        territoryId:
+          type: integer
+        city:
+          type: string
+        status:
+          type: string
+        remark:
+          type: string
+
+    ProjectUpdate:
+      type: object
+      properties:
+        projectCode:
+          type: string
+        date:
+          type: string
+          format: date
+        month:
+          type: string
+        labSubmissionDate:
+          type: string
+          format: date
+        scientistId:
+          type: integer
+        clientId:
+          type: integer
+        billingClientId:
+          type: integer
+        serviceId:
+          type: integer
+        sampleType:
+          type: string
+        withAnalysis:
+          type: string
+        noOfSamples:
+          type: integer
+        dataRequirement:
+          type: string
+        gbPerSample:
+          type: number
+        totalGb:
+          type: number
+        ratePerSample:
+          type: number
+        totalAmount:
+          type: number
+        gst:
+          type: number
+        totalProjectCost:
+          type: number
+        quotationNo:
+          type: string
+        salesPersonId:
+          type: integer
+        territoryId:
+          type: integer
+        city:
+          type: string
+        status:
+          type: string
+        remark:
+          type: string
+
+    ProjectListResponse:
+      type: object
+      required:
+        - data
+        - total
+        - page
+        - pageSize
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Project"
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+
+    ProjectDetail:
+      type: object
+      required:
+        - id
+        - projectCode
+        - date
+        - status
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: integer
+        projectCode:
+          type: string
+        date:
+          type: string
+          format: date
+        month:
+          type: string
+        labSubmissionDate:
+          type: string
+          format: date
+        scientistId:
+          type: integer
+        scientistName:
+          type: string
+        clientId:
+          type: integer
+        clientName:
+          type: string
+        billingClientId:
+          type: integer
+        billingClientName:
+          type: string
+        serviceId:
+          type: integer
+        serviceName:
+          type: string
+        serviceHead:
+          type: string
+        sampleType:
+          type: string
+        withAnalysis:
+          type: string
+        noOfSamples:
+          type: integer
+        dataRequirement:
+          type: string
+        gbPerSample:
+          type: number
+        totalGb:
+          type: number
+        ratePerSample:
+          type: number
+        totalAmount:
+          type: number
+        gst:
+          type: number
+        totalProjectCost:
+          type: number
+        quotationNo:
+          type: string
+        salesPersonId:
+          type: integer
+        salesPersonName:
+          type: string
+        territoryId:
+          type: integer
+        territoryName:
+          type: string
+        city:
+          type: string
+        status:
+          type: string
+        remark:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        qcRecord:
+          $ref: "#/components/schemas/QcRecord"
+        dataDelivery:
+          $ref: "#/components/schemas/DataDelivery"
+        invoices:
+          type: array
+          items:
+            $ref: "#/components/schemas/Invoice"
+        payments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Payment"
+
+    QcRecord:
+      type: object
+      required:
+        - id
+        - projectId
+      properties:
+        id:
+          type: integer
+        projectId:
+          type: integer
+        qcPass:
+          type: integer
+        qcFail:
+          type: integer
+        qcReportDate:
+          type: string
+          format: date
+        qcTatDays:
+          type: integer
+        qcTatStatus:
+          type: string
+        runNo:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    QcRecordInput:
+      type: object
+      properties:
+        qcPass:
+          type: integer
+        qcFail:
+          type: integer
+        qcReportDate:
+          type: string
+          format: date
+        qcTatDays:
+          type: integer
+        qcTatStatus:
+          type: string
+        runNo:
+          type: string
+
+    DataDelivery:
+      type: object
+      required:
+        - id
+        - projectId
+      properties:
+        id:
+          type: integer
+        projectId:
+          type: integer
+        rawDataSentDate:
+          type: string
+          format: date
+        finalDataDate:
+          type: string
+          format: date
+        rawDataDays:
+          type: integer
+        finalDataDays:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    DataDeliveryInput:
+      type: object
+      properties:
+        rawDataSentDate:
+          type: string
+          format: date
+        finalDataDate:
+          type: string
+          format: date
+        rawDataDays:
+          type: integer
+        finalDataDays:
+          type: integer
+
+    Invoice:
+      type: object
+      required:
+        - id
+        - projectId
+        - paymentStatus
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: integer
+        projectId:
+          type: integer
+        projectCode:
+          type: string
+        clientId:
+          type: integer
+        clientName:
+          type: string
+        invoiceNo:
+          type: string
+        invoiceDate:
+          type: string
+          format: date
+        qcPassSamples:
+          type: integer
+        subtotal:
+          type: number
+        gst:
+          type: number
+        totalAmount:
+          type: number
+        invoiceTatDays:
+          type: integer
+        paymentStatus:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    InvoiceInput:
+      type: object
+      required:
+        - projectId
+      properties:
+        projectId:
+          type: integer
+        invoiceNo:
+          type: string
+        invoiceDate:
+          type: string
+          format: date
+        qcPassSamples:
+          type: integer
+        subtotal:
+          type: number
+        gst:
+          type: number
+        totalAmount:
+          type: number
+        invoiceTatDays:
+          type: integer
+        paymentStatus:
+          type: string
+
+    InvoiceUpdate:
+      type: object
+      properties:
+        invoiceNo:
+          type: string
+        invoiceDate:
+          type: string
+          format: date
+        qcPassSamples:
+          type: integer
+        subtotal:
+          type: number
+        gst:
+          type: number
+        totalAmount:
+          type: number
+        invoiceTatDays:
+          type: integer
+        paymentStatus:
+          type: string
+
+    InvoiceListResponse:
+      type: object
+      required:
+        - data
+        - total
+        - page
+        - pageSize
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Invoice"
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+
+    Payment:
+      type: object
+      required:
+        - id
+        - projectId
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: integer
+        projectId:
+          type: integer
+        invoiceId:
+          type: integer
+        invoiceNo:
+          type: string
+        clientId:
+          type: integer
+        clientName:
+          type: string
+        receivedAmount:
+          type: number
+        remainingAmount:
+          type: number
+        paymentReceivedDate:
+          type: string
+          format: date
+        notes:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    PaymentInput:
+      type: object
+      required:
+        - projectId
+      properties:
+        projectId:
+          type: integer
+        invoiceId:
+          type: integer
+        receivedAmount:
+          type: number
+        remainingAmount:
+          type: number
+        paymentReceivedDate:
+          type: string
+          format: date
+        notes:
+          type: string
+
+    PaymentUpdate:
+      type: object
+      properties:
+        invoiceId:
+          type: integer
+        receivedAmount:
+          type: number
+        remainingAmount:
+          type: number
+        paymentReceivedDate:
+          type: string
+          format: date
+        notes:
+          type: string
+
+    PaymentListResponse:
+      type: object
+      required:
+        - data
+        - total
+        - page
+        - pageSize
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Payment"
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+
+    # ──────────────────────────────────────────────────────────────────────
+    # ANALYTICS SCHEMAS
+    # ──────────────────────────────────────────────────────────────────────
+
+    DashboardKpis:
+      type: object
+      required:
+        - totalProjects
+        - activeProjects
+        - completedProjects
+        - cancelledProjects
+        - totalRevenue
+        - receivedPayments
+        - pendingPayments
+        - totalSamples
+        - projectsThisMonth
+        - revenueThisMonth
+        - pendingQc
+        - pendingAnalysis
+        - pendingReport
+      properties:
+        totalProjects:
+          type: integer
+        activeProjects:
+          type: integer
+        completedProjects:
+          type: integer
+        cancelledProjects:
+          type: integer
+        totalRevenue:
+          type: number
+        receivedPayments:
+          type: number
+        pendingPayments:
+          type: number
+        totalSamples:
+          type: integer
+        avgTatDays:
+          type: number
+        projectsThisMonth:
+          type: integer
+        revenueThisMonth:
+          type: number
+        qcPassRate:
+          type: number
+        pendingQc:
+          type: integer
+        pendingAnalysis:
+          type: integer
+        pendingReport:
+          type: integer
+        topService:
+          type: string
+        topClient:
+          type: string
+        topTerritory:
+          type: string
+
+    RevenueDataPoint:
+      type: object
+      required:
+        - period
+        - revenue
+        - projects
+        - samples
+        - received
+        - pending
+      properties:
+        period:
+          type: string
+        revenue:
+          type: number
+        projects:
+          type: integer
+        samples:
+          type: integer
+        received:
+          type: number
+        pending:
+          type: number
+
+    RevenueAnalytics:
+      type: object
+      required:
+        - data
+        - totalRevenue
+        - totalReceived
+        - totalPending
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/RevenueDataPoint"
+        totalRevenue:
+          type: number
+        totalReceived:
+          type: number
+        totalPending:
+          type: number
+
+    ProjectStatusCount:
+      type: object
+      required:
+        - status
+        - count
+      properties:
+        status:
+          type: string
+        count:
+          type: integer
+
+    ProjectDataPoint:
+      type: object
+      required:
+        - period
+        - total
+        - completed
+        - active
+        - cancelled
+      properties:
+        period:
+          type: string
+        label:
+          type: string
+        total:
+          type: integer
+        completed:
+          type: integer
+        active:
+          type: integer
+        cancelled:
+          type: integer
+
+    ProjectAnalytics:
+      type: object
+      required:
+        - data
+        - statusBreakdown
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProjectDataPoint"
+        statusBreakdown:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProjectStatusCount"
+
+    ServiceStat:
+      type: object
+      required:
+        - serviceId
+        - serviceName
+        - projectCount
+        - totalRevenue
+        - totalSamples
+      properties:
+        serviceId:
+          type: integer
+        serviceName:
+          type: string
+        serviceHead:
+          type: string
+        projectCount:
+          type: integer
+        totalRevenue:
+          type: number
+        totalSamples:
+          type: integer
+        avgTatDays:
+          type: number
+
+    ClientStat:
+      type: object
+      required:
+        - clientId
+        - clientName
+        - projectCount
+        - totalRevenue
+      properties:
+        clientId:
+          type: integer
+        clientName:
+          type: string
+        projectCount:
+          type: integer
+        totalRevenue:
+          type: number
+        receivedAmount:
+          type: number
+        pendingAmount:
+          type: number
+        totalSamples:
+          type: integer
+        lastProjectDate:
+          type: string
+        territory:
+          type: string
+
+    TerritoryStat:
+      type: object
+      required:
+        - territoryId
+        - territoryName
+        - projectCount
+        - totalRevenue
+      properties:
+        territoryId:
+          type: integer
+        territoryName:
+          type: string
+        projectCount:
+          type: integer
+        totalRevenue:
+          type: number
+        totalSamples:
+          type: integer
+        clientCount:
+          type: integer
+
+    TatOverall:
+      type: object
+      required:
+        - avgQcTat
+        - avgDeliveryTat
+        - avgInvoiceTat
+      properties:
+        avgQcTat:
+          type: number
+        avgDeliveryTat:
+          type: number
+        avgInvoiceTat:
+          type: number
+
+    TatBucket:
+      type: object
+      required:
+        - service
+        - projectCount
+      properties:
+        service:
+          type: string
+        avgQcTat:
+          type: number
+        avgDeliveryTat:
+          type: number
+        projectCount:
+          type: integer
+
+    TatAnalytics:
+      type: object
+      required:
+        - overall
+        - byService
+      properties:
+        overall:
+          $ref: "#/components/schemas/TatOverall"
+        byService:
+          type: array
+          items:
+            $ref: "#/components/schemas/TatBucket"
+
+    PendingClientBalance:
+      type: object
+      required:
+        - clientId
+        - clientName
+        - pending
+      properties:
+        clientId:
+          type: integer
+        clientName:
+          type: string
+        pending:
+          type: number
+        invoiced:
+          type: number
+
+    PaymentAnalytics:
+      type: object
+      required:
+        - totalInvoiced
+        - totalReceived
+        - totalPending
+        - collectionRate
+        - pendingByClient
+      properties:
+        totalInvoiced:
+          type: number
+        totalReceived:
+          type: number
+        totalPending:
+          type: number
+        collectionRate:
+          type: number
+        pendingByClient:
+          type: array
+          items:
+            $ref: "#/components/schemas/PendingClientBalance"
+
+    PipelineStage:
+      type: object
+      required:
+        - stage
+        - count
+        - value
+      properties:
+        stage:
+          type: string
+        count:
+          type: integer
+        value:
+          type: number
+
+    PipelineStatus:
+      type: object
+      required:
+        - stages
+      properties:
+        stages:
+          type: array
+          items:
+            $ref: "#/components/schemas/PipelineStage"

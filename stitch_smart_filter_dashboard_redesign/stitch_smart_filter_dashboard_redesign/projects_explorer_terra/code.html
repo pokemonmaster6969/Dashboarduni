@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BioTech Ops - Projects Explorer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&amp;family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#dcc48e",
+                        "primary-fixed": "#c8e8d0",
+                        "primary": "#4a7c59",
+                        "primary-fixed-dim": "#8ecf9e",
+                        "outline-variant": "#c4c8bc",
+                        "on-tertiary-fixed": "#221a05",
+                        "inverse-primary": "#8ecf9e",
+                        "on-secondary-fixed": "#1e1a13",
+                        "surface-container-high": "#eae6de",
+                        "background": "#faf6f0",
+                        "tertiary": "#705c30",
+                        "outline": "#74796e",
+                        "inverse-surface": "#2e3230",
+                        "on-surface": "#2e3230",
+                        "error": "#b83230",
+                        "on-error-container": "#690005",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad8",
+                        "surface-container": "#f0ece4",
+                        "on-surface-variant": "#4a4e4a",
+                        "on-primary-fixed": "#002110",
+                        "primary-container": "#78a886",
+                        "inverse-on-surface": "#f5f0e8",
+                        "on-tertiary-fixed-variant": "#554020",
+                        "secondary": "#6b6358",
+                        "on-primary-fixed-variant": "#2a6038",
+                        "tertiary-container": "#c4a66a",
+                        "surface-container-highest": "#e4e0d8",
+                        "secondary-fixed": "#f0e8db",
+                        "surface-container-low": "#f5f1ea",
+                        "on-tertiary-container": "#554020",
+                        "surface": "#faf6f0",
+                        "secondary-fixed-dim": "#d4ccbf",
+                        "surface-tint": "#4a7c59",
+                        "secondary-container": "#f0e8db",
+                        "surface-variant": "#e4e0d8",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#faf6f0",
+                        "on-secondary-container": "#5e5548",
+                        "on-background": "#2e3230",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#d8f0de",
+                        "tertiary-fixed": "#f8e0a8",
+                        "surface-dim": "#dbd7cf",
+                        "on-secondary-fixed-variant": "#4a4538"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-page": "1.5rem",
+                        "gutter-lg": "2rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Literata", "serif"],
+                        "display": ["Literata", "serif"],
+                        "body": ["Nunito Sans", "sans-serif"],
+                        "label": ["Nunito Sans", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["1.75rem", { lineHeight: "2.25rem" }],
+                        "body-sm": ["0.875rem", { lineHeight: "1.25rem" }],
+                        "label-caps": ["0.75rem", { lineHeight: "1rem", letterSpacing: "0.05em", fontWeight: "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .font-headline-md { font-family: theme('fontFamily.headline'); font-size: theme('fontSize.headline-md.0'); line-height: theme('fontSize.headline-md.1.lineHeight'); }
+            .text-headline-md { font-size: theme('fontSize.headline-md.0'); line-height: theme('fontSize.headline-md.1.lineHeight'); }
+            .font-body-sm { font-family: theme('fontFamily.body'); font-size: theme('fontSize.body-sm.0'); line-height: theme('fontSize.body-sm.1.lineHeight'); }
+            .text-body-sm { font-size: theme('fontSize.body-sm.0'); line-height: theme('fontSize.body-sm.1.lineHeight'); }
+            .font-label-caps { font-family: theme('fontFamily.label'); font-size: theme('fontSize.label-caps.0'); line-height: theme('fontSize.label-caps.1.lineHeight'); letter-spacing: theme('fontSize.label-caps.1.letterSpacing'); font-weight: theme('fontSize.label-caps.1.fontWeight'); }
+            .text-label-caps { font-size: theme('fontSize.label-caps.0'); line-height: theme('fontSize.label-caps.1.lineHeight'); letter-spacing: theme('fontSize.label-caps.1.letterSpacing'); font-weight: theme('fontSize.label-caps.1.fontWeight'); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body h-full flex overflow-hidden selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar (Mobile) -->
+<header class="md:hidden flex justify-between items-center w-full px-margin-page h-16 bg-surface dark:bg-on-background border-b border-slate-border/60 fixed top-0 z-50">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">
+            BioTech Ops
+        </div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors duration-200">search</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors duration-200">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors duration-200">help_outline</span>
+<img alt="User profile" class="w-8 h-8 rounded-full object-cover" data-alt="A warm, earthy, realistic portrait of a laboratory technician smiling slightly, wearing a clean white lab coat, standing in a soft, bright, slightly out of focus modern biotech lab environment. The light is warm and natural." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVAFYjAdzdqJnrOTN6iDSjNRHIL36eu9viWQqTMjPtM1iLyewnBsQPdfD7TG1AesoZZH1Co_g-WcmyRFPH3pJGLqMUFD_1hFKhsCyZx4JbE8_A0cPyoi0T8VnPDur-C9gm1SQMHLfaTFI0Ntp92C_So_qZ_H-aErb5FiL5SrYq7KQUy-uPGQCz7h23OzDzppxpC1f04lr1BshfZuvbgYrk7q_uFpuhan0URBkC468MJGroe4QIkMhx"/>
+</div>
+</header>
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex flex-col h-full py-gutter-lg bg-surface-container-lowest border-r border-outline-variant/30 docked left-0 h-screen w-64 z-40 shrink-0 shadow-[4px_0_20px_rgba(46,50,48,0.02)]">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary-fixed-dim">
+<span class="material-symbols-outlined font-bold">biotech</span>
+</div>
+<div>
+<h1 class="font-headline font-bold text-on-surface tracking-tight text-lg">LabCentral</h1>
+<p class="font-label-caps text-on-surface-variant/70 text-xs mt-0.5">V2.4 Operational</p>
+</div>
+</div>
+<div class="px-4 mb-6">
+<button class="w-full bg-primary text-on-primary font-body-sm font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-[0_4px_12px_rgba(74,124,89,0.2)] active:scale-95 duration-100">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">add</span>
+                New Experiment
+            </button>
+</div>
+<ul class="flex-1 px-3 space-y-1 overflow-y-auto">
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">dashboard</span>
+<span class="font-body-sm font-medium">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">analytics</span>
+<span class="font-body-sm font-medium">Analytics</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surface-container text-primary font-semibold border-l-4 border-primary shadow-sm group" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">biotech</span>
+<span class="font-body-sm">Projects</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">settings</span>
+<span class="font-body-sm font-medium">Settings</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto px-3 border-t border-outline-variant/30 pt-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined text-[18px]">contact_support</span>
+<span class="font-body-sm font-medium text-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined text-[18px]">manage_accounts</span>
+<span class="font-body-sm font-medium text-sm">Account</span>
+</a>
+<div class="mt-4 px-3 flex items-center gap-3 py-2">
+<img alt="Organization Logo" class="w-8 h-8 rounded-full object-cover border border-outline-variant/50" data-alt="A warm, earthy, realistic portrait of a laboratory technician smiling slightly, wearing a clean white lab coat, standing in a soft, bright, slightly out of focus modern biotech lab environment. The light is warm and natural." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC76wT_nWPs3rZc6ybL_kuRi81Qo0IhtVYOXpTa4RzekvPaubxCZToSM_wa_f7NZIp5GlPaDb3yCKJyqKXeGB_uPFjJnip3VE49R33eUz3yUugX-2TSjpoYjbtXWOO1w0GRGlNST0hWF1y0lh0gXujBT3OeKsZHxYBa_tQOD82S4vODdujA7s0jV8R1C5H35n900u8VU1ibe66eWKW3vXKbEUnSm-4s3fylhPZmupCP7CBRCAPDd6mT"/>
+<div>
+<p class="font-body-sm font-semibold text-on-surface text-sm">Dr. A. Vance</p>
+<p class="font-label-caps text-on-surface-variant text-[10px]">Lead Researcher</p>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden pt-16 md:pt-0 bg-background relative">
+<!-- Decorative Background Element -->
+<div class="absolute top-0 right-0 w-1/2 h-64 bg-gradient-to-bl from-primary-fixed/20 to-transparent pointer-events-none rounded-bl-full blur-3xl opacity-60"></div>
+<!-- Top Nav (Desktop specific overrides) -->
+<div class="hidden md:flex justify-between items-center w-full px-8 py-5 shrink-0 z-10 relative">
+<h2 class="font-headline-md text-on-surface font-semibold">Projects Explorer</h2>
+<div class="flex items-center gap-5">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/70 group-focus-within:text-primary transition-colors text-sm">search</span>
+<input class="bg-surface-container-lowest border border-outline-variant/50 text-on-surface font-body-sm rounded-full pl-9 pr-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm" placeholder="Search experiments, cell lines..." type="text"/>
+</div>
+<button class="relative p-2 rounded-full hover:bg-surface-variant/50 transition-colors text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1.5 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+</button>
+</div>
+</div>
+<!-- Content Canvas -->
+<div class="flex-1 overflow-y-auto px-4 md:px-8 pb-8 z-10 relative">
+<!-- Filters & Bulk Actions -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 mt-4 md:mt-0">
+<div class="flex flex-wrap items-center gap-2">
+<button class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant/60 text-on-surface font-body-sm px-3 py-1.5 rounded-lg hover:bg-surface-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                        Filters
+                    </button>
+<div class="h-5 w-px bg-outline-variant/40 mx-1"></div>
+<button class="font-body-sm px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface font-medium hover:bg-surface-variant transition-colors">All (243)</button>
+<button class="font-body-sm px-3 py-1.5 rounded-lg bg-transparent text-on-surface-variant hover:bg-surface-variant/50 transition-colors">Active (89)</button>
+<button class="font-body-sm px-3 py-1.5 rounded-lg bg-transparent text-on-surface-variant hover:bg-surface-variant/50 transition-colors">Completed (142)</button>
+</div>
+<div class="flex items-center gap-3 w-full md:w-auto justify-end">
+<button class="text-primary font-body-sm font-semibold flex items-center gap-1 hover:bg-primary-fixed/30 px-3 py-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span> Export
+                    </button>
+</div>
+</div>
+<!-- Table Container (Bento/Card Style) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_rgba(46,50,48,0.04)] border border-outline-variant/20 overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container/50 border-b border-outline-variant/30 font-label-caps text-on-surface-variant">
+<th class="py-3 px-4 font-semibold w-12 text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary/50" type="checkbox"/>
+</th>
+<th class="py-3 px-4 font-semibold">Project ID</th>
+<th class="py-3 px-4 font-semibold">Title &amp; Objective</th>
+<th class="py-3 px-4 font-semibold">Lead</th>
+<th class="py-3 px-4 font-semibold">Status</th>
+<th class="py-3 px-4 font-semibold">Progress</th>
+<th class="py-3 px-4 font-semibold text-right">Last Updated</th>
+<th class="py-3 px-4 w-12"></th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-on-surface divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-variant/20 transition-colors group cursor-pointer">
+<td class="py-3 px-4 text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary/50" type="checkbox"/>
+</td>
+<td class="py-3 px-4 font-mono text-xs text-on-surface-variant">CR-2023-A</td>
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface mb-0.5 group-hover:text-primary transition-colors">CRISPR Targeted Delivery Vector</div>
+<div class="text-xs text-on-surface-variant truncate max-w-xs">Optimization of lipid nanoparticles for in-vivo gene editing efficacy.</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center text-xs font-bold">SM</div>
+<span class="text-sm">S. Miller</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-primary-fixed/40 text-on-primary-fixed-variant text-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Active
+                                    </span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 75%"></div>
+</div>
+<span class="text-xs text-on-surface-variant">75%</span>
+</div>
+</td>
+<td class="py-3 px-4 text-right text-sm text-on-surface-variant">2 hrs ago</td>
+<td class="py-3 px-4 text-right">
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-variant/20 transition-colors group cursor-pointer bg-primary-fixed/5">
+<td class="py-3 px-4 text-center">
+<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary/50" type="checkbox"/>
+</td>
+<td class="py-3 px-4 font-mono text-xs text-on-surface-variant">AB-1092-X</td>
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface mb-0.5 group-hover:text-primary transition-colors">Monoclonal Ab Screening</div>
+<div class="text-xs text-on-surface-variant truncate max-w-xs">High-throughput affinity mapping for novel oncology targets.</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<img alt="Avatar" class="w-6 h-6 rounded-full object-cover" data-alt="A small, soft-focus circular avatar portrait of a female scientist in a warm lit setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgt1kNaqhp0sQM8C0F-CgO0CbnW8sw--DvhQi-siHmdByLVXOqMCVKHAugUYBwQttghQkLaiyYSg73ePGsoVN0kKAYCwqtFSd9cfFyad1HATI2VWmEfhI6bHdNt2c0bkbl9jkQU6DaKz6CyWmaUnhdKKUHok7qhDbnYqPIgylIDuEeBA-6tRWS63Mea0rcksq-4lVjJQEgRSuIjuQm7vwCv7KAQx5I5gziJ5ACFVUz_Bv2D-9Gtpvs"/>
+<span class="text-sm">J. Chen</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-tertiary-fixed/50 text-on-tertiary-fixed-variant text-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Review
+                                    </span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 95%"></div>
+</div>
+<span class="text-xs text-on-surface-variant">95%</span>
+</div>
+</td>
+<td class="py-3 px-4 text-right text-sm text-on-surface-variant">Yesterday</td>
+<td class="py-3 px-4 text-right">
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-variant/20 transition-colors group cursor-pointer text-on-surface-variant/70">
+<td class="py-3 px-4 text-center">
+<input class="rounded border-outline-variant/50 text-primary focus:ring-primary/50" type="checkbox"/>
+</td>
+<td class="py-3 px-4 font-mono text-xs">SYN-004-C</td>
+<td class="py-3 px-4">
+<div class="font-semibold mb-0.5">Synthetic Pathway Engineering</div>
+<div class="text-xs truncate max-w-xs">Metabolic flux analysis for increased yield of compound X.</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center text-xs font-bold">DR</div>
+<span class="text-sm">D. Rossi</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-surface-variant/50 text-on-surface-variant text-xs font-semibold">
+<span class="material-symbols-outlined text-[12px]">done_all</span> Completed
+                                    </span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-outline-variant h-full rounded-full" style="width: 100%"></div>
+</div>
+<span class="text-xs">100%</span>
+</div>
+</td>
+<td class="py-3 px-4 text-right text-sm">Oct 12</td>
+<td class="py-3 px-4 text-right">
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-variant/20 transition-colors group cursor-pointer">
+<td class="py-3 px-4 text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary/50" type="checkbox"/>
+</td>
+<td class="py-3 px-4 font-mono text-xs text-on-surface-variant">P-991-ZZ</td>
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface mb-0.5 group-hover:text-primary transition-colors">Protein Fold Simulation</div>
+<div class="text-xs text-on-surface-variant truncate max-w-xs">AI-driven predictive modeling of novel structural motifs.</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-xs font-bold">EL</div>
+<span class="text-sm">E. Larson</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-error-container/50 text-on-error-container text-xs font-semibold">
+<span class="material-symbols-outlined text-[12px]">warning</span> Blocked
+                                    </span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-error h-full rounded-full" style="width: 30%"></div>
+</div>
+<span class="text-xs text-on-surface-variant">30%</span>
+</div>
+</td>
+<td class="py-3 px-4 text-right text-sm text-on-surface-variant">Oct 08</td>
+<td class="py-3 px-4 text-right">
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="bg-surface-container-lowest border-t border-outline-variant/20 px-4 py-3 flex items-center justify-between text-sm text-on-surface-variant">
+<div>Showing 1 to 4 of 243 projects</div>
+<div class="flex items-center gap-2">
+<button class="p-1 rounded-md hover:bg-surface-variant/50 disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-7 h-7 rounded-md bg-primary text-on-primary flex items-center justify-center font-semibold text-xs">1</button>
+<button class="w-7 h-7 rounded-md hover:bg-surface-variant/50 flex items-center justify-center text-xs">2</button>
+<button class="w-7 h-7 rounded-md hover:bg-surface-variant/50 flex items-center justify-center text-xs">3</button>
+<span class="px-1">...</span>
+<button class="p-1 rounded-md hover:bg-surface-variant/50">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden flex justify-around items-center w-full h-16 bg-surface dark:bg-on-background fixed bottom-0 z-50 border-t border-slate-border/20 shadow-[0_-4px_20px_rgba(46,50,48,0.04)]">
+<a class="flex flex-col items-center justify-center gap-1 text-on-surface-variant dark:text-outline-variant w-full h-full hover:text-primary transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-[10px]">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 text-on-surface-variant dark:text-outline-variant w-full h-full hover:text-primary transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-[10px]">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 text-primary font-bold border-t-2 border-primary pt-1 w-full h-full pb-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">biotech</span>
+<span class="font-label-caps text-[10px]">Projects</span>
+</a>
+</nav>
+</body></html>

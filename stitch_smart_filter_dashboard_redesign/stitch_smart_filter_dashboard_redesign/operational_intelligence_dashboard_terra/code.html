@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Project Operational Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&amp;family=Nunito+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed-dim": "#dcc48e",
+                        "primary-fixed": "#c8e8d0",
+                        "primary": "#4a7c59",
+                        "primary-fixed-dim": "#8ecf9e",
+                        "outline-variant": "#c4c8bc",
+                        "on-tertiary-fixed": "#221a05",
+                        "inverse-primary": "#8ecf9e",
+                        "on-secondary-fixed": "#1e1a13",
+                        "surface-container-high": "#eae6de",
+                        "background": "#faf6f0",
+                        "tertiary": "#705c30",
+                        "outline": "#74796e",
+                        "inverse-surface": "#2e3230",
+                        "on-surface": "#2e3230",
+                        "error": "#b83230",
+                        "on-error-container": "#690005",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad8",
+                        "surface-container": "#f0ece4",
+                        "on-surface-variant": "#4a4e4a",
+                        "on-primary-fixed": "#002110",
+                        "primary-container": "#78a886",
+                        "inverse-on-surface": "#f5f0e8",
+                        "on-tertiary-fixed-variant": "#554020",
+                        "secondary": "#6b6358",
+                        "on-primary-fixed-variant": "#2a6038",
+                        "tertiary-container": "#c4a66a",
+                        "surface-container-highest": "#e4e0d8",
+                        "secondary-fixed": "#f0e8db",
+                        "surface-container-low": "#f5f1ea",
+                        "on-tertiary-container": "#554020",
+                        "surface": "#faf6f0",
+                        "secondary-fixed-dim": "#d4ccbf",
+                        "surface-tint": "#4a7c59",
+                        "secondary-container": "#f0e8db",
+                        "surface-variant": "#e4e0d8",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#faf6f0",
+                        "on-secondary-container": "#5e5548",
+                        "on-background": "#2e3230",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#d8f0de",
+                        "tertiary-fixed": "#f8e0a8",
+                        "surface-dim": "#dbd7cf",
+                        "on-secondary-fixed-variant": "#4a4538"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        lg: "1rem",
+                        xl: "1.5rem",
+                        full: "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Literata", "serif"],
+                        display: ["Literata", "serif"],
+                        body: ["Nunito Sans", "sans-serif"],
+                        label: ["Nunito Sans", "sans-serif"]
+                    }
+                }
+            }
+        };
+    </script>
+<style>
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: #faf6f0;
+            color: #2e3230;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Literata', serif;
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 20px rgba(46, 50, 48, 0.06);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="bg-surface dark:bg-on-background docked left-0 h-screen w-64 border-r border-slate-border/60 flat no shadows flex flex-col py-8 flex-shrink-0 z-10 sticky top-0 hidden md:flex">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img class="object-cover w-full h-full" data-alt="A stylized, organic abstract logo representing biotechnology, featuring flowing leaf-like shapes and DNA helix patterns in soft earthy greens and warm cream tones. The design is modern, approachable, and grounded, fitting a high-end natural UI aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNAiH5VyzqA0LynUUt-xo7kC33TVyyDRNS5U-fIqt-nDAunl69HI5WeuRvFoV9xH7rXOMU61rQD4RnF2fjtyrXgWwET-lFvKkIetBAwUkyalSPBooJ-SFMx4EpnniQWhtxcNkchHDDb4CVosvDrlu1aa5q85Mq6TwhzjwUOV9yBFj-DQP9oHhk3ZzvctkjUETcpChkcTb0uSnOybA21C5QBQime7Hp5sH9jz8xNaVyYE_JVDUo5jvO"/>
+</div>
+<div>
+<h1 class="font-headline font-bold text-xl tracking-tight text-on-surface">LabCentral</h1>
+<p class="text-sm text-on-surface-variant font-label">V2.4 Operational</p>
+</div>
+</div>
+<div class="px-4 mb-6">
+<button class="w-full bg-primary text-on-primary py-3 px-4 rounded-xl font-label font-semibold flex items-center justify-center gap-2 hover:bg-primary-fixed-variant transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+                New Experiment
+            </button>
+</div>
+<ul class="flex-1 px-4 space-y-2">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-semibold bg-surface-container dark:bg-surface-container-highest border-r-4 border-primary transition-all duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label">Analytics</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">biotech</span>
+<span class="font-label">Projects</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label">Settings</span>
+</a>
+</li>
+</ul>
+<ul class="px-4 space-y-2 mt-auto">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-label">Support</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">manage_accounts</span>
+<span class="font-label">Account</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden">
+<!-- TopNavBar (Mobile mainly, but integrated for completeness as per instructions if needed, though SideNav implies web) -->
+<header class="bg-surface dark:bg-on-background docked full-width top-0 border-b border-slate-border/60 flat no shadows flex justify-between items-center w-full px-6 h-16 flex-shrink-0 md:hidden">
+<div class="font-headline font-bold text-lg text-primary dark:text-primary-fixed">BioTech Ops</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors duration-200 cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors duration-200 cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-tertiary-container overflow-hidden">
+<img class="object-cover w-full h-full" data-alt="A small, circular profile picture of a female scientist in a warm, naturally lit laboratory environment. She is smiling gently, embodying a friendly and professional organic aesthetic with soft earthy tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAef8REvcd-mAp6_bqH3of1hPDMOxS24yw5UEOt6oX76MW_FEm-7B33wFRCXltmurUeC6dkC-CrMUnxLt64_bZQ8mFq3Sm11OAdrMqCBycM1Sw7aqwwgOCLE4d05r4lY1fPHupIOfHwut_h2xQIl_4EIpVmKyn6rL9GlSo0Q6o07al8ofdOCrGAQfB1AlDW3wp4B6b1tRlMJMZ39wYUTF9AlLod9R7yYwmdgigYdYtKlYVT-MqH3y_f"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Area -->
+<div class="flex-1 overflow-y-auto p-4 md:p-8 space-y-6">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h2 class="font-headline text-3xl font-bold text-on-surface">Operational Intelligence</h2>
+<p class="text-on-surface-variant mt-1 text-lg">Real-time insights across active projects and resources.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-surface-container rounded-lg font-label text-on-surface font-semibold hover:bg-surface-variant transition-colors flex items-center gap-2 border border-outline-variant/30">
+<span class="material-symbols-outlined text-sm">download</span> Export
+                    </button>
+</div>
+</div>
+<!-- Smart Filter Bar -->
+<div class="bg-surface-container-lowest rounded-xl p-4 soft-shadow border border-outline-variant/20">
+<div class="flex items-center gap-2 mb-3 text-on-surface-variant font-label font-semibold">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+<span>Smart Filters</span>
+</div>
+<div class="flex flex-wrap gap-3">
+<select class="bg-surface rounded-lg border border-outline-variant/50 text-body py-2 pl-3 pr-8 focus:ring-2 focus:ring-primary focus:border-primary text-on-surface">
+<option>All Clients</option>
+<option>PharmaCorp</option>
+<option>BioGen</option>
+</select>
+<select class="bg-surface rounded-lg border border-outline-variant/50 text-body py-2 pl-3 pr-8 focus:ring-2 focus:ring-primary focus:border-primary text-on-surface">
+<option>All Scientists</option>
+<option>Dr. Smith</option>
+<option>Dr. Jones</option>
+</select>
+<select class="bg-surface rounded-lg border border-outline-variant/50 text-body py-2 pl-3 pr-8 focus:ring-2 focus:ring-primary focus:border-primary text-on-surface">
+<option>Global Territory</option>
+<option>North America</option>
+<option>Europe</option>
+</select>
+<select class="bg-surface rounded-lg border border-outline-variant/50 text-body py-2 pl-3 pr-8 focus:ring-2 focus:ring-primary focus:border-primary text-on-surface">
+<option>All Services</option>
+<option>Sequencing</option>
+<option>Synthesis</option>
+</select>
+<select class="bg-surface rounded-lg border border-outline-variant/50 text-body py-2 pl-3 pr-8 focus:ring-2 focus:ring-primary focus:border-primary text-on-surface">
+<option>Active Status</option>
+<option>Completed</option>
+<option>Pending</option>
+</select>
+<button class="px-4 py-2 text-primary font-label font-semibold hover:bg-primary-fixed/30 rounded-lg transition-colors ml-auto">
+                        Clear All
+                    </button>
+</div>
+</div>
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-4">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 soft-shadow border border-outline-variant/20 flex flex-col">
+<span class="text-on-surface-variant font-label text-sm uppercase tracking-wider mb-2">Total Revenue</span>
+<span class="font-headline text-2xl font-bold text-on-surface">$2.4M</span>
+<div class="flex items-center gap-1 mt-auto pt-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="font-label text-sm">+12% vs last month</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 soft-shadow border border-outline-variant/20 flex flex-col">
+<span class="text-on-surface-variant font-label text-sm uppercase tracking-wider mb-2">Active Projects</span>
+<span class="font-headline text-2xl font-bold text-on-surface">142</span>
+<div class="flex items-center gap-1 mt-auto pt-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="font-label text-sm">+5 new this week</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 soft-shadow border border-outline-variant/20 flex flex-col">
+<span class="text-on-surface-variant font-label text-sm uppercase tracking-wider mb-2">Avg Turnaround</span>
+<span class="font-headline text-2xl font-bold text-on-surface">14 Days</span>
+<div class="flex items-center gap-1 mt-auto pt-2 text-tertiary">
+<span class="material-symbols-outlined text-sm">trending_flat</span>
+<span class="font-label text-sm">Stable</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 soft-shadow border border-outline-variant/20 flex flex-col">
+<span class="text-on-surface-variant font-label text-sm uppercase tracking-wider mb-2">Scientist Load</span>
+<span class="font-headline text-2xl font-bold text-on-surface">85%</span>
+<div class="flex items-center gap-1 mt-auto pt-2 text-error">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="font-label text-sm">Nearing capacity</span>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 soft-shadow border border-outline-variant/20 flex flex-col">
+<span class="text-on-surface-variant font-label text-sm uppercase tracking-wider mb-2">Client Sat</span>
+<span class="font-headline text-2xl font-bold text-on-surface">4.8/5</span>
+<div class="flex items-center gap-1 mt-auto pt-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="font-label text-sm">Highest this year</span>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 soft-shadow border border-outline-variant/20 flex flex-col">
+<span class="text-on-surface-variant font-label text-sm uppercase tracking-wider mb-2">Issue Rate</span>
+<span class="font-headline text-2xl font-bold text-on-surface">1.2%</span>
+<div class="flex items-center gap-1 mt-auto pt-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+<span class="font-label text-sm">-0.4% vs last month</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Main Content -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Main Area Chart (Takes up 2 columns) -->
+<div class="lg:col-span-2 bg-surface-container-lowest rounded-xl p-6 soft-shadow border border-outline-variant/20">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline text-xl font-bold text-on-surface">Monthly Volume Trend</h3>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<div class="h-72 w-full relative">
+<canvas id="volumeChart"></canvas>
+</div>
+</div>
+<!-- Territory Pie Chart -->
+<div class="bg-surface-container-lowest rounded-xl p-6 soft-shadow border border-outline-variant/20">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline text-xl font-bold text-on-surface">Territory</h3>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<div class="h-64 w-full relative flex items-center justify-center">
+<canvas id="territoryChart"></canvas>
+</div>
+</div>
+<!-- Scientist Workload (Bar Chart Horizontal) -->
+<div class="bg-surface-container-lowest rounded-xl p-6 soft-shadow border border-outline-variant/20">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline text-xl font-bold text-on-surface">Scientist Load</h3>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<div class="h-64 w-full relative">
+<canvas id="workloadChart"></canvas>
+</div>
+</div>
+<!-- Top Clients (Bar Chart Vertical) -->
+<div class="lg:col-span-2 bg-surface-container-lowest rounded-xl p-6 soft-shadow border border-outline-variant/20">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline text-xl font-bold text-on-surface">Top Clients Revenue</h3>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<div class="h-64 w-full relative">
+<canvas id="clientsChart"></canvas>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface-container-lowest rounded-xl soft-shadow border border-outline-variant/20 overflow-hidden">
+<div class="p-6 border-b border-outline-variant/20 flex justify-between items-center">
+<h3 class="font-headline text-xl font-bold text-on-surface">Filtered Projects Explorer</h3>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface rounded-full border border-outline-variant/50 text-body py-1.5 pl-9 pr-4 text-sm focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Search projects..." type="text"/>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label text-sm uppercase tracking-wider">
+<th class="px-6 py-4 font-semibold">Project ID</th>
+<th class="px-6 py-4 font-semibold">Client</th>
+<th class="px-6 py-4 font-semibold">Service</th>
+<th class="px-6 py-4 font-semibold">Scientist</th>
+<th class="px-6 py-4 font-semibold">Status</th>
+<th class="px-6 py-4 font-semibold text-right">Value</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 text-body text-on-surface">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 font-medium">PRJ-2023-89</td>
+<td class="px-6 py-4">PharmaCorp Inc.</td>
+<td class="px-6 py-4 text-on-surface-variant">Genome Sequencing</td>
+<td class="px-6 py-4 flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-container overflow-hidden"></div>
+                                    Dr. A. Smith
+                                </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-fixed text-on-primary-fixed-variant">
+                                        In Progress
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right font-medium">$45,000</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 font-medium">PRJ-2023-91</td>
+<td class="px-6 py-4">BioGen LLC</td>
+<td class="px-6 py-4 text-on-surface-variant">Protein Synthesis</td>
+<td class="px-6 py-4 flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-tertiary-container overflow-hidden"></div>
+                                    Dr. B. Jones
+                                </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-variant text-on-surface-variant">
+                                        Planning
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right font-medium">$12,500</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 font-medium">PRJ-2023-85</td>
+<td class="px-6 py-4">NeuroTech Labs</td>
+<td class="px-6 py-4 text-on-surface-variant">Data Analysis</td>
+<td class="px-6 py-4 flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-container overflow-hidden"></div>
+                                    Dr. C. Davis
+                                </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-tertiary-fixed text-on-tertiary-fixed-variant">
+                                        Review
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right font-medium">$28,000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-outline-variant/20 flex justify-between items-center text-sm text-on-surface-variant">
+<span>Showing 1 to 3 of 45 entries</span>
+<div class="flex gap-1">
+<button class="px-3 py-1 rounded border border-outline-variant/50 hover:bg-surface-container transition-colors">&lt;</button>
+<button class="px-3 py-1 rounded bg-primary text-on-primary font-semibold">1</button>
+<button class="px-3 py-1 rounded border border-outline-variant/50 hover:bg-surface-container transition-colors">2</button>
+<button class="px-3 py-1 rounded border border-outline-variant/50 hover:bg-surface-container transition-colors">&gt;</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Chart.js global defaults for Terra aesthetic
+        Chart.defaults.font.family = "'Nunito Sans', sans-serif";
+        Chart.defaults.color = '#74796e'; // outline
+        Chart.defaults.scale.grid.color = 'rgba(196, 200, 188, 0.2)'; // outline-variant with opacity
+        Chart.defaults.plugins.tooltip.backgroundColor = '#2e3230'; // inverse-surface
+        Chart.defaults.plugins.tooltip.padding = 12;
+        Chart.defaults.plugins.tooltip.cornerRadius = 8;
+
+        const terraColors = {
+            primary: '#4a7c59',
+            primaryContainer: '#78a886',
+            tertiary: '#705c30',
+            tertiaryContainer: '#c4a66a',
+            surfaceVariant: '#e4e0d8',
+            secondary: '#6b6358'
+        };
+
+        // 1. Monthly Volume Trend (Area Chart)
+        const ctxVolume = document.getElementById('volumeChart').getContext('2d');
+        new Chart(ctxVolume, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Project Volume',
+                    data: [65, 78, 90, 81, 105, 125],
+                    borderColor: terraColors.primary,
+                    backgroundColor: 'rgba(74, 124, 89, 0.1)', // primary with opacity
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#faf6f0',
+                    pointBorderColor: terraColors.primary,
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, border: { display: false } },
+                    x: { border: { display: false }, grid: { display: false } }
+                }
+            }
+        });
+
+        // 2. Territory (Pie/Doughnut Chart)
+        const ctxTerritory = document.getElementById('territoryChart').getContext('2d');
+        new Chart(ctxTerritory, {
+            type: 'doughnut',
+            data: {
+                labels: ['North America', 'Europe', 'Asia', 'Other'],
+                datasets: [{
+                    data: [45, 30, 15, 10],
+                    backgroundColor: [
+                        terraColors.primary,
+                        terraColors.tertiary,
+                        terraColors.primaryContainer,
+                        terraColors.surfaceVariant
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: { position: 'right', labels: { usePointStyle: true, boxWidth: 8 } }
+                }
+            }
+        });
+
+        // 3. Scientist Workload (Horizontal Bar)
+        const ctxWorkload = document.getElementById('workloadChart').getContext('2d');
+        new Chart(ctxWorkload, {
+            type: 'bar',
+            data: {
+                labels: ['Dr. Smith', 'Dr. Jones', 'Dr. Davis', 'Dr. Lee'],
+                datasets: [{
+                    label: 'Active Projects',
+                    data: [12, 19, 8, 15],
+                    backgroundColor: terraColors.tertiaryContainer,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { beginAtZero: true, border: { display: false } },
+                    y: { border: { display: false }, grid: { display: false } }
+                }
+            }
+        });
+
+        // 4. Top Clients (Vertical Bar)
+        const ctxClients = document.getElementById('clientsChart').getContext('2d');
+        new Chart(ctxClients, {
+            type: 'bar',
+            data: {
+                labels: ['PharmaCorp', 'BioGen', 'NeuroTech', 'GenoLife', 'Synthetix'],
+                datasets: [{
+                    label: 'Revenue ($k)',
+                    data: [450, 320, 280, 210, 150],
+                    backgroundColor: terraColors.primaryContainer,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, border: { display: false } },
+                    x: { border: { display: false }, grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body></html>

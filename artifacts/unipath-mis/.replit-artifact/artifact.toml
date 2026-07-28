@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "UniPath MIS"
+version = "1.0.0"
+id = "artifacts/unipath-mis"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21119
+
+[services.development]
+run = "pnpm --filter @workspace/unipath-mis run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/unipath-mis", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/unipath-mis/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21119"
+BASE_PATH = "/"
